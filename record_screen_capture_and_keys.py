@@ -34,6 +34,7 @@ def main():
     pool = multiprocessing.Pool(processes=1)
 
     def on_key_press(event):
+        nonlocal key
         try:
             key.add(event.char)
             if event.char == 'q':
