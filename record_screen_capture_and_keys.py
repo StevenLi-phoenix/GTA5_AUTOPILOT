@@ -31,7 +31,7 @@ def main():
     frame_times = []
     sliding_fps = []
 
-    pool = multiprocessing.Pool(processes=1)
+    pool = multiprocessing.Pool(processes=4)
 
     def on_key_press(event):
         nonlocal key
@@ -77,6 +77,7 @@ def main():
 
             if c.display: # enable only when config to save time
                 frame_C = frame.copy()
+                frame_C = cv2.resize(frame_C, (320,180))
                 cv2.putText(frame_C, f"FPS: {round(sliding_fps_average, 2)}", c.display_fps_position, c.display_font, 1, (0, 0, 255), 3)
                 cv2.putText(frame_C, f"KEY: {key}", c.display_key_position, c.display_font, 1, (0, 0, 255), 3)
                 cv2.imshow("Screen Capture", frame_C)
