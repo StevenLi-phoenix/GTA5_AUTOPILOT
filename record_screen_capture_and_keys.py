@@ -1,3 +1,4 @@
+import logging
 import os
 import time
 
@@ -8,11 +9,13 @@ import mss
 import multiprocessing
 import c
 
+log = logging.getLogger("")
 
 def write_to_disk(frames, keys, batch_count):
     # Save the screen captures and corresponding key inputs as a single file
     combined_data = {'frames': frames, 'keys': keys}
     np.savez_compressed(os.path.join(c.recoreding_output_directionary, f'dataset_{batch_count}.npz'), **combined_data)
+    log.debug(f"Savez_compressed:{combined_data}")
 
 def main():
     quit_flag = False
@@ -54,12 +57,11 @@ def main():
     with keyboard.Listener(on_press=on_key_press, on_release=on_key_release) as listener:
         while not quit_flag:
             index += 1
-
             start_time = time.time()
-            print(index, key)
+            log.info(index, key)
             frame = np.array(sct.grab(c.monitor))
             frames.append(frame)
-            keys.append(key)
+            keys.append(key.copy())
 
             # FPS limiter and smooth fps indicator
             # ---
@@ -103,17 +105,17 @@ def main():
     # Close the windows
     cv2.destroyAllWindows()
 
-    print("Record process end, current status of writing process")
-    print("Waiting for the following write manager to finish")
+    log.info("Record process end, current status of writing process")
+    log.info("Waiting for the following write manager to finish")
     pool.close()
     wait_time = 0
     # Monitor the status of workers
     while any(not result[1].ready() for result in write_manager):
         wait_time += 1
         time.sleep(1)
-        print(f"====[total:{len(write_manager)}, wait:{wait_time}s]====")
+        log.info(f"====[total:{len(write_manager)}, wait:{wait_time}s]====")
         for result in write_manager:
-            print(f"\rWork {result[0]} {result[1].ready()}")
+            log.info(f"\rWork {result[0]} {result[1].ready()}")
     pool.join()
 
 

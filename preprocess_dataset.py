@@ -9,6 +9,7 @@ def load_data(name="dataset_0.npz"):
     data = np.load(os.path.join(c.recoreding_output_directionary, name), allow_pickle=True)
     frames = data["frames"]
     keys = data["keys"]
+    print(keys)
     if c.display:
         for index, frame in enumerate(frames):
             key = keys[index]
@@ -19,6 +20,6 @@ def load_data(name="dataset_0.npz"):
     return frames, keys
 
 
-for i in range(3):
+for i in range(6):
     _, _ = load_data(f"dataset_{i}.npz")
 cv2.destroyAllWindows()
