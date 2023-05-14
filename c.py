@@ -19,7 +19,10 @@ sliding_fps_average_size = 5
 display = True
 display_font = cv2.FONT_HERSHEY_SIMPLEX
 display_fps_position = (10,30)
+display_fps_color = (0, 0, 255)
 display_key_position = (10,60)
+display_key_color = (0, 0, 255)
+
 
 log = logging.getLogger("")
 fileHandler = logging.FileHandler(filename=logname)
