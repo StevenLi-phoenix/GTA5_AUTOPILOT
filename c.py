@@ -1,12 +1,13 @@
 import logging
 import os
+import sys
 
 import cv2
 
 logname = "record.log"
 loglevel = logging.DEBUG
 
-recoreding_output_directionary = os.path.join(os.curdir,"records/")
+recoreding_output_directionary = os.path.join(os.curdir,"records_2/")
 os.makedirs(recoreding_output_directionary, exist_ok=True)
 
 # Set up the screen capture
@@ -25,12 +26,14 @@ display_key_color = (0, 0, 255)
 
 
 log = logging.getLogger("")
+log.setLevel(loglevel)
 fileHandler = logging.FileHandler(filename=logname)
 fileHandler.setLevel(loglevel)
 log.addHandler(fileHandler)
-streamHandler = logging.StreamHandler()
+streamHandler = logging.StreamHandler(stream=sys.stdout)
 streamHandler.setLevel(loglevel)
 log.addHandler(streamHandler)
+
 
 if fps <= 0:
     fps = 1000
