@@ -7,7 +7,7 @@ import cv2
 logname = "record.log"
 loglevel = logging.DEBUG
 
-recoreding_output_directionary = os.path.join(os.curdir,"records_2/")
+recoreding_output_directionary = os.path.join(os.curdir,"records/")
 os.makedirs(recoreding_output_directionary, exist_ok=True)
 
 # Set up the screen capture
@@ -17,7 +17,7 @@ fps = 10
 sliding_fps_average_size = 5
 
 # DISPLAY
-display = True
+display = False
 display_font = cv2.FONT_HERSHEY_SIMPLEX
 display_fps_position = (10,30)
 display_fps_color = (0, 0, 255)
